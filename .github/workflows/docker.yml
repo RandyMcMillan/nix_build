@@ -37,6 +37,7 @@ jobs:
       - run: apt-get update -y && apt-get install make sudo docker.io -y
       - run: mkdir -m 0755 /nix && chown root /nix
       - run: curl -L https://hydra.nixos.org/job/nix/master/dockerImage.x86_64-linux/latest/download/1 | docker load
+      - run: docker images
       #- run: curl -L https://nixos.org/nix/install | sh -s -- --daemon
       - name: checkout@v3 fetch-depth_0 submodules_true set-safe-dir_true
         uses: actions/checkout@v3
