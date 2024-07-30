@@ -43,7 +43,7 @@ jobs:
           submodules: 'true'
           set-safe-directory: 'true'
       ## notice: these are post checkout steps
-      - run: apt-get update -y && apt-get install make -y
+      - run: apt-get update -y && apt-get install make sudo -y
       - run: |
           if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
           . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
