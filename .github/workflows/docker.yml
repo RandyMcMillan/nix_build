@@ -35,6 +35,7 @@ jobs:
           submodules: 'true'
           set-safe-directory: 'true'
       ## notice: these are post checkout steps
+      - run: apt-get update -y
       - run: nix --version
       - run: printenv
       - run: make
