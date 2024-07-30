@@ -47,7 +47,6 @@ jobs:
       - run: |
           if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
           . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-          fi
-      - run: nix --version
+          fi && nix --version
       - run: printenv
       - run: make
