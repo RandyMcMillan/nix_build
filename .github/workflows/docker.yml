@@ -21,9 +21,15 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest"]
-        tag: ["2.21.4"]
+        tag: ["latest", "slim-bullseye"]
     runs-on: ${{ matrix.os }}
-    container: nixos/nix:${{ matrix.tag }}
+    container: rust:${{ matrix.tag }}
+
+##       matrix:
+##         os: ["ubuntu-latest"]
+##         tag: ["2.21.4"]
+##     runs-on: ${{ matrix.os }}
+##     container: nixos/nix:${{ matrix.tag }}
 
     steps:
       ## notice: this is a pre checkout step
