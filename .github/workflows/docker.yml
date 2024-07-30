@@ -53,3 +53,4 @@ jobs:
       ##     fi && nix --version && sudo -S make
       ## - run: printenv
       - run: make
+      - run: make nix-docker
