@@ -30,7 +30,6 @@ jobs:
       ## notice: additional operations can be done prior to checkout
       - run: nix --version
       - run: printenv
-      - run: cargo search gnostr --limit 100
       - name: checkout@v3 fetch-depth_0 submodules_true set-safe-dir_true
         uses: actions/checkout@v3
         with:
@@ -38,5 +37,4 @@ jobs:
           submodules: 'true'
           set-safe-directory: 'true'
       ## notice: these are post checkout steps
-      - run: cargo search gnostr --limit 100
       - run: make
