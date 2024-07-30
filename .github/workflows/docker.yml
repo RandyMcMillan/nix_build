@@ -21,7 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest"]
-        tag: ["latest", "slim-bullseye"]
+        tag: ["latest"]
     runs-on: ${{ matrix.os }}
     container: rust:${{ matrix.tag }}
 
@@ -44,6 +44,10 @@ jobs:
           set-safe-directory: 'true'
       ## notice: these are post checkout steps
       - run: apt-get update -y
+      - run: |
+          if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+          . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+          fi
       - run: nix --version
       - run: printenv
       - run: make
