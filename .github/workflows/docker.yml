@@ -34,6 +34,7 @@ jobs:
     steps:
       ## notice: this is a pre checkout step
       ## notice: additional operations can be done prior to checkout
+      - run: apt-get update -y && apt-get install make sudo docker.io -y
       - run: mkdir -m 0755 /nix && chown root /nix
       - run: curl -L https://hydra.nixos.org/job/nix/master/dockerImage.x86_64-linux/latest/download/1 | docker load
       #- run: curl -L https://nixos.org/nix/install | sh -s -- --daemon
