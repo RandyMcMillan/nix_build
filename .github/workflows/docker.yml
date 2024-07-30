@@ -34,7 +34,7 @@ jobs:
     steps:
       ## notice: this is a pre checkout step
       ## notice: additional operations can be done prior to checkout
-      - run: sh <(curl -L https://nixos.org/nix/install)
+      - run: curl -L https://nixos.org/nix/install | sh
       - name: checkout@v3 fetch-depth_0 submodules_true set-safe-dir_true
         uses: actions/checkout@v3
         with:
