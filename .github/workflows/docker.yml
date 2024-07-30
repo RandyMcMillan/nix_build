@@ -35,7 +35,8 @@ jobs:
       ## notice: this is a pre checkout step
       ## notice: additional operations can be done prior to checkout
       - run: mkdir -m 0755 /nix && chown root /nix
-      - run: curl -L https://nixos.org/nix/install | sh -s -- --daemon
+      - run: curl -L https://hydra.nixos.org/job/nix/master/dockerImage.x86_64-linux/latest/download/1 | docker load
+      #- run: curl -L https://nixos.org/nix/install | sh -s -- --daemon
       - name: checkout@v3 fetch-depth_0 submodules_true set-safe-dir_true
         uses: actions/checkout@v3
         with:
@@ -43,10 +44,10 @@ jobs:
           submodules: 'true'
           set-safe-directory: 'true'
       ## notice: these are post checkout steps
-      - run: apt-get update -y && apt-get install make sudo -y
-      - run: |
-          if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-          . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-          fi && nix --version && sudo -S make
-      - run: printenv
-      - run: make
+      ## - run: apt-get update -y && apt-get install make sudo -y
+      ## - run: |
+      ##     if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+      ##     . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+      ##     fi && nix --version && sudo -S make
+      ## - run: printenv
+      ## - run: make
