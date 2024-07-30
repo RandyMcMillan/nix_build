@@ -1,0 +1,55 @@
+name: docker-yml
+
+on:
+  push:
+    tags:
+      - '**[0-9]+.[0-9]+.[0-9]+*'
+  #pull_request:
+    branches:
+      - '*'
+      - '*/*'
+      - '**'
+      - 'master'
+      - 'main'
+
+env:
+  GIT_DISCOVERY_ACROSS_FILESYSTEM: 1
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest"]
+        tag: ["latest"]
+    runs-on: ${{ matrix.os }}
+    container: rust:${{ matrix.tag }}
+
+##       matrix:
+##         os: ["ubuntu-latest"]
+##         tag: ["2.21.4"]
+##     runs-on: ${{ matrix.os }}
+##     container: nixos/nix:${{ matrix.tag }}
+
+    steps:
+      ## notice: this is a pre checkout step
+      ## notice: additional operations can be done prior to checkout
+      - run: apt-get update -y && apt-get install make sudo docker.io -y
+      - run: mkdir -m 0755 /nix && chown root /nix
+      - run: curl -L https://hydra.nixos.org/job/nix/master/dockerImage.x86_64-linux/latest/download/1 | docker load
+      - run: docker images
+      #- run: curl -L https://nixos.org/nix/install | sh -s -- --daemon
+      - name: checkout@v3 fetch-depth_0 submodules_true set-safe-dir_true
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+          submodules: 'true'
+          set-safe-directory: 'true'
+      ## notice: these are post checkout steps
+      ## - run: apt-get update -y && apt-get install make sudo -y
+      ## - run: |
+      ##     if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+      ##     . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+      ##     fi && nix --version && sudo -S make
+      ## - run: printenv
+      - run: docker run -ti -w /root/nix_build --volume `pwd`:/root/nix_build                    nixos/nix
