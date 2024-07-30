@@ -52,4 +52,4 @@ jobs:
       ##     . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
       ##     fi && nix --version && sudo -S make
       ## - run: printenv
-      - run: make nix-docker
+      - run: docker run -ti -w /root/nix_build --volume `pwd`:/root/nix_build                    nixos/nix
